@@ -27,4 +27,11 @@ numOfNan = (13323 - 500) - len(array)
 arrayAverage = int(array.mean())
 df["age"] = df["age"].fillna(arrayAverage,  limit=numOfNan)
 
+#filling reach
+array = df['reach'].to_numpy()
+array = array[~np.isnan(array)]
+arrayAverage = int(array.mean())
+df["reach"] = df["reach"].fillna(arrayAverage)
+
+print(df["reach"])
 #print(df.head())
