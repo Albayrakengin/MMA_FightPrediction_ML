@@ -33,5 +33,13 @@ array = array[~np.isnan(array)]
 arrayAverage = int(array.mean())
 df["reach"] = df["reach"].fillna(arrayAverage)
 
-print(df["reach"])
+#filling height
+array = df['height'].to_numpy()
+array = array[~np.isnan(array)]
+arrayAverage = int(array.mean())
+df["height"] = df["height"].fillna(arrayAverage)
+
+#filling
+
+print(df["height"])
 #print(df.head())
