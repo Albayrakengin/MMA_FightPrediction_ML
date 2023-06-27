@@ -52,6 +52,29 @@ for i in range(0, len(df['fighter']), 2):
     fighter_reach_diff = np.append(fighter_reach_diff, opponent_reach/fighter_reach)
     
 df['reach_differential'] = fighter_reach_diff
+
+#Filling height differential
+
+fighter_height_diff = np.array([])
+for i in range(0, len(df['fighter']), 2):
+    fighter_height = float(df.iloc[i]['height'])
+    opponent_height = float(df.iloc[i+1]['height'])
+    fighter_height_diff = np.append(fighter_height_diff, fighter_height/opponent_height)
+    fighter_height_diff = np.append(fighter_height_diff, opponent_height/fighter_height)
+    
+df['height_differential'] = fighter_height_diff
+
+#Filling age differential
+
+fighter_age_diff = np.array([])
+for i in range(0, len(df['fighter']), 2):
+    fighter_age = float(df.iloc[i]['age'])
+    opponent_age = float(df.iloc[i+1]['age'])
+    fighter_age_diff = np.append(fighter_age_diff, fighter_age/opponent_age)
+    fighter_age_diff = np.append(fighter_age_diff, opponent_age/fighter_age)
+    
+df['age_differential'] = fighter_age_diff
+
 #Encoding the string variables
 
 label_encoder = preprocessing.LabelEncoder()
