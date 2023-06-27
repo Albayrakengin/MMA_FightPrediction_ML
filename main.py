@@ -59,7 +59,6 @@ for i in df['time']:
     time_array = np.append(time_array, ((minutes * 60) + seconds))
 df['time'] = time_array
 
-
 #Splitting data into X and Y 
 
 Y = df["result"]
@@ -74,5 +73,14 @@ print(f"y train = {Y_train.shape}")
 print(f"x test = {X_test.shape}")
 print(f"y test = {Y_test.shape}")
 
+rf_Model = RandomForestClassifier()
 
+#rf_Model.fit(X_train, Y_train)
+
+for i in df.columns:
+    if df[f'{i}'].isnull().sum().sum() > 0:
+        print(i)
+
+
+print(df.isnull().sum().sum())
 #print(df.head())
