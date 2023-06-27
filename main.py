@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
 
 # Planning to keep inplace False in order to prevent undesired changes.
@@ -44,5 +45,14 @@ df["height"] = df["height"].fillna(arrayAverage)
 Y = df["result"]
 X = df.drop("result", axis=1, inplace=False)
 
+#Split data into train and test sets
 
-print(df.head())
+X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size= 0.25, random_state=101)
+
+print(f"x train = {X_train.shape}")
+print(f"y train = {Y_train.shape}")
+print(f"x test = {X_test.shape}")
+print(f"y test = {Y_test.shape}")
+
+
+#print(df.head())
