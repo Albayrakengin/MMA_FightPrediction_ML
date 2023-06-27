@@ -41,6 +41,17 @@ array = array[~np.isnan(array)]
 arrayAverage = int(array.mean())
 df["height"] = df["height"].fillna(arrayAverage)
 
+#Filling reach differential
+
+fighter_names = df["fighter"]
+fighter_reach_diff = np.array([])
+for i in range(0, len(df['fighter']), 2):
+    fighter_reach = float(df.iloc[i]['reach'])
+    opponent_reach = float(df.iloc[i+1]['reach'])
+    fighter_reach_diff = np.append(fighter_reach_diff, fighter_reach/opponent_reach)
+    fighter_reach_diff = np.append(fighter_reach_diff, opponent_reach/fighter_reach)
+    
+df['reach_differential'] = fighter_reach_diff
 #Encoding the string variables
 
 label_encoder = preprocessing.LabelEncoder()
