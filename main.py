@@ -50,6 +50,15 @@ df['stance'] = label_encoder.fit_transform(df["stance"])
 df['method'] = label_encoder.fit_transform(df["method"])
 df['division'] = label_encoder.fit_transform(df["division"])
 
+time_array = np.array([])
+for i in df['time']:
+    time_str = i
+    minutes, seconds = time_str.split(":")
+    minutes = int(minutes)
+    seconds = int(seconds) 
+    time_array = np.append(time_array, ((minutes * 60) + seconds))
+df['time'] = time_array
+
 
 #Splitting data into X and Y 
 
