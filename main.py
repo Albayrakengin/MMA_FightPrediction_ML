@@ -1,10 +1,10 @@
 import numpy as np
 import pandas as pd
-
+from sklearn.model_selection import train_test_split
 
 # Planning to keep inplace False in order to prevent undesired changes.
 df = pd.read_csv("MMA_FightPrediction_ML\masterdataframe.csv")
-irrelevant_columns = np.array(["event_url", "fight_url", "fighter_url", "opponent_url", "referee", "time_format", "dob"])
+irrelevant_columns = np.array(["event_url", "fight_url", "fighter_url", "opponent_url", "referee", "time_format", "dob", "date"])
 
 for i in irrelevant_columns:
     df = df.drop(i, axis= 1, inplace=False)
@@ -39,7 +39,10 @@ array = array[~np.isnan(array)]
 arrayAverage = int(array.mean())
 df["height"] = df["height"].fillna(arrayAverage)
 
-#filling
+#Splitting data into X and Y 
 
-print(df["height"])
-#print(df.head())
+Y = df["result"]
+X = df.drop("result", axis=1, inplace=False)
+
+
+print(df.head())
