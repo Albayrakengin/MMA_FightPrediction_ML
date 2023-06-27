@@ -2,6 +2,7 @@ import numpy as np
 import pandas as pd
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
+from sklearn import preprocessing
 
 # Planning to keep inplace False in order to prevent undesired changes.
 df = pd.read_csv("MMA_FightPrediction_ML\masterdataframe.csv")
@@ -39,6 +40,16 @@ array = df['height'].to_numpy()
 array = array[~np.isnan(array)]
 arrayAverage = int(array.mean())
 df["height"] = df["height"].fillna(arrayAverage)
+
+#Encoding the string variables
+
+label_encoder = preprocessing.LabelEncoder()
+df['fighter']= label_encoder.fit_transform(df['fighter'])
+df["opponent"] = label_encoder.transform(df["opponent"])
+df['stance'] = label_encoder.fit_transform(df["stance"])
+df['method'] = label_encoder.fit_transform(df["method"])
+df['division'] = label_encoder.fit_transform(df["division"])
+
 
 #Splitting data into X and Y 
 
