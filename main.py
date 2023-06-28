@@ -43,7 +43,6 @@ arrayAverage = int(array.mean())
 df["height"] = df["height"].fillna(arrayAverage)
 
 #Filling reach differential
-
 fighter_names = df["fighter"]
 fighter_reach_diff = np.array([])
 for i in range(0, len(df['fighter']), 2):
@@ -85,9 +84,6 @@ df['stance'] = label_encoder.fit_transform(df["stance"])
 df['method'] = label_encoder.fit_transform(df["method"])
 df['division'] = label_encoder.fit_transform(df["division"])
 
-sample = np.array([])
-sample = label_encoder.fit_transform(["Ilia Topuria"])
-print(sample)
 time_array = np.array([])
 for i in df['time']:
     time_str = i
@@ -103,14 +99,8 @@ Y = df["result"]
 X = df.drop("result", axis=1, inplace=False)
 
 #Split data into train and test sets
-df = df.drop(df.loc[:, 'knockdowns_differential':'ground_strikes_attempts_per_min'].columns, axis=1, inplace= False)
-df = df.drop(df.loc[:, 'knockdowns':'ground_strikes_def'].columns, axis=1, inplace= False)
-df = df.drop(df.loc[:, 'method':'time'].columns, axis=1, inplace= False)
-print(df.head())
 
 X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size= 0.25, random_state=101)
-
-
 
 rf_Model = RandomForestClassifier()
 
@@ -128,4 +118,3 @@ f1 = f1_score(Y_test, predictions)
 print("Precision:", precision)
 print("Recall:", recall)
 print("F1-score:", f1)
-
