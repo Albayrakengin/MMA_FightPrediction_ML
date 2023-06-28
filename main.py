@@ -3,6 +3,7 @@ import pandas as pd
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
 from sklearn import preprocessing
+from sklearn.metrics import precision_score, recall_score, f1_score
 
 # Planning to keep inplace False in order to prevent undesired changes.
 df = pd.read_csv("MMA_FightPrediction_ML\masterdataframe.csv")
@@ -84,6 +85,9 @@ df['stance'] = label_encoder.fit_transform(df["stance"])
 df['method'] = label_encoder.fit_transform(df["method"])
 df['division'] = label_encoder.fit_transform(df["division"])
 
+sample = np.array([])
+sample = label_encoder.fit_transform(["Ilia Topuria"])
+print(sample)
 time_array = np.array([])
 for i in df['time']:
     time_str = i
@@ -99,22 +103,29 @@ Y = df["result"]
 X = df.drop("result", axis=1, inplace=False)
 
 #Split data into train and test sets
+df = df.drop(df.loc[:, 'knockdowns_differential':'ground_strikes_attempts_per_min'].columns, axis=1, inplace= False)
+df = df.drop(df.loc[:, 'knockdowns':'ground_strikes_def'].columns, axis=1, inplace= False)
+df = df.drop(df.loc[:, 'method':'time'].columns, axis=1, inplace= False)
+print(df.head())
 
 X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size= 0.25, random_state=101)
 
-print(f"x train = {X_train.shape}")
-print(f"y train = {Y_train.shape}")
-print(f"x test = {X_test.shape}")
-print(f"y test = {Y_test.shape}")
+
 
 rf_Model = RandomForestClassifier()
 
-#rf_Model.fit(X_train, Y_train)
+rf_Model.fit(X_train, Y_train)
+print(rf_Model.score(X_test, Y_test))
 
-for i in df.columns:
-    if df[f'{i}'].isnull().sum().sum() > 0:
-        print(i)
+predictions = rf_Model.predict(X_test)
 
+# Compute precision, recall, and F1-score
+precision = precision_score(Y_test, predictions)
+recall = recall_score(Y_test, predictions)
+f1 = f1_score(Y_test, predictions)
 
-print(df.isnull().sum().sum())
-#print(df.head())
+# Print the scores
+print("Precision:", precision)
+print("Recall:", recall)
+print("F1-score:", f1)
+
