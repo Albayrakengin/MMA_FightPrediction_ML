@@ -50,7 +50,7 @@ for i in range(0, len(df['fighter']), 2):
     opponent_reach = float(df.iloc[i+1]['reach'])
     fighter_reach_diff = np.append(fighter_reach_diff, fighter_reach/opponent_reach)
     fighter_reach_diff = np.append(fighter_reach_diff, opponent_reach/fighter_reach)
-    
+
 df['reach_differential'] = fighter_reach_diff
 
 #Filling height differential
@@ -94,13 +94,17 @@ for i in df['time']:
 df['time'] = time_array
 
 #Splitting data into X and Y 
+df = df.drop(df.loc[:, 'knockdowns_differential':'ground_strikes_attempts_per_min'].columns, axis=1, inplace= False)
+df = df.drop(df.loc[:, 'knockdowns':'ground_strikes_def'].columns, axis=1, inplace= False)
+df = df.drop(df.loc[:, 'method':'time'].columns, axis=1, inplace= False)
 
 Y = df["result"]
 X = df.drop("result", axis=1, inplace=False)
 
 #Split data into train and test sets
+X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.05, shuffle=False)
 
-X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size= 0.25, random_state=101)
+print(X_train)
 
 rf_Model = RandomForestClassifier()
 
