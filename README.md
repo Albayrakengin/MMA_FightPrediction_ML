@@ -1,2 +1,2 @@
 # MMA_FightPrediction_ML
-This program will make predictions on MMA-matchmakings using Machine Learning algorithms and kaggle dataset. 
+I am aiming to train a RandomForest model with high accuracy. 
